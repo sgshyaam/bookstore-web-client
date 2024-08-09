@@ -3,13 +3,13 @@ import { useNavigate } from "react-router-dom";
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import { Typography, Container } from "@mui/material";
-import MenuListComposition from '../components/MenuListComposition';
-import AddButton from "../components/AddButton";
-import BookCard from "../components/BookCard";
-import { getAllBooks, updateBookById, deleteBookById, createBook } from "../services/bookService";
-import BookFormDialog from "../components/BookFormDialog";
-import CartNavButton from "../components/CartNavButton";
-import { CartContext } from "../context/CartContext";
+import MenuListComposition from '../../components/MenuListComposition';
+import AddButton from "../../components/AddButton";
+import BookCard from "../../components/BookCard";
+import { getAllBooks, updateBookById, deleteBookById, createBook } from "../../services/bookService";
+import BookFormDialog from "../../components/BookFormDialog";
+import CartNavButton from "../../components/CartNavButton";
+import { CartContext } from "../../context/CartContext";
 
 const BookListPage = () => {
     const navigate = useNavigate();

@@ -23,9 +23,9 @@ const LoginForm = () => {
 
     return(
         <>
-        <Container>
+        <Container sx={{width:800, paddingTop:15}}>
             <Typography variant="h4">Login</Typography>
-            <div>
+            <form onSubmit={handleLogin}>
                 <TextField 
                     label="Username"
                     variant="filled"
@@ -53,12 +53,12 @@ const LoginForm = () => {
                     onChange={(e) => setPassword(e.target.value)}
                 />
                 <Button
-                    onClick={handleLogin}
+                    type="submit"
                     variant="contained"
                     color="primary"
                 >Login</Button>
 
-            </div>
+            </form>
         </Container>
         </>
 

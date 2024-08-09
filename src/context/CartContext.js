@@ -6,45 +6,46 @@ export const CartProvider  = ({ children }) => {
     const [cart, setCart] = useState([]);
 
     const addToCart = (bookId, title) => {
-        const book = {
-            title,
-            book_id: bookId,
-            quantity: 1,
-        };
         setCart((prev) => {
-            if(!prev) return [book];
+            const existingBookIndex = prev.findIndex((item) => item.book_id === bookId);
 
-            const bookIndex = prev.findIndex((item) => item.book_id === book.book_id)
-
-            if(bookIndex === -1) {
-                return [...prev, book];
+            if (existingBookIndex === -1) {
+                return [...prev, { book_id: bookId, title, quantity: 1 }];
             } else {
                 const updatedCart = [...prev];
-                updatedCart[bookIndex].quantity += 1;
+                updatedCart[existingBookIndex].quantity += 1;
                 return updatedCart;
             }
         });
-    }
+    };
 
     const removeFromCart = (bookId) => {
-        setCart((prev) => {
-            const bookIndex = prev.findIndex((item) => item.book_id === bookId);
-
-            const updatedCart = [...prev];
-            if(updatedCart[bookIndex].quantity === 0) {
-                alert('Item is already removed from cart!');
-            } else {
-                updatedCart[bookIndex].quantity -=1;
-            }
-            updatedCart.filter((item) => item.quantity!==0);
-            return updatedCart;
-        })
-    }
+        setCart((prev) => prev.filter((item) => item.book_id !== bookId));
+    };
 
     const clearCart = () => setCart([]);
 
-    return(
-        <CartContext.Provider value={{ cart, addToCart, removeFromCart, clearCart }}>
+    const updateQuantity = (bookId, quantity) => {
+        if (quantity < 1) {
+            alert('Quantity must be at least 1.');
+            return;
+        }
+        setCart((prev) => {
+            const bookIndex = prev.findIndex((item) => item.book_id === bookId);
+            if (bookIndex === -1) {
+                alert('Item not found in cart!');
+                return prev;
+            }
+
+            const updatedCart = [...prev];
+            updatedCart[bookIndex].quantity = quantity;
+
+            return updatedCart.filter((item) => item.quantity > 0);
+        });
+    };
+
+    return (
+        <CartContext.Provider value={{ cart, addToCart, removeFromCart, clearCart, updateQuantity }}>
             {children}
         </CartContext.Provider>
     );
