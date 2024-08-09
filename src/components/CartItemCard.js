@@ -10,15 +10,15 @@ import {
 import Stack from '@mui/material/Stack';
 import {AddCircleRounded, RemoveRounded, DeleteRounded} from "@mui/icons-material";
 
-const CartItemCard = ({ book, onAdd, onRemove, onClear }) => {
+const CartItemCard = ({ book, onRemove, onUpdate }) => {
     return(
-        <Card key={book.id}>
+        <Card key={book.book_id}>
             <CardContent>
                 <Typography variant='h6'>{book.title}</Typography>
             </CardContent>
-            <CardActions fullwidth>
+            <CardActions>
             <Stack direction="row" spacing={2}>
-                <Button onClick={() => onRemove(book._id)}>
+                <Button onClick={()=>onUpdate(book.book_id, book.quantity - 1)}>
                     <RemoveRounded />
                 </Button>
                 <TextField
@@ -31,12 +31,12 @@ const CartItemCard = ({ book, onAdd, onRemove, onClear }) => {
                     size="small"
                     sx={{width:100}}
                 />
-                <Button onClick={() => onAdd(book._id)}>
+                <Button onClick={()=>onUpdate(book.book_id, book.quantity + 1)}>
                     <AddCircleRounded />
                 </Button>
             </Stack>
             <Stack direction="row" spacing={2} justifyContent={"right"} sx={{width:'100%'}}>
-                <Button color='error' onClick={() => onClear(book._id)}>
+                <Button color='error' onClick={()=>onRemove(book.book_id)}>
                     <DeleteRounded />
                 </Button>             
             </Stack>

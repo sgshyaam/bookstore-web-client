@@ -13,10 +13,10 @@ const CartNavButton = () => {
       };
 
     return(
-        <Button>
-            <Link to='/cart' style={linkStyle}>
-                <ShoppingCartIcon color='primary' />
-            </Link>
+        <Button variant="contained" color="primary" style={linkStyle}>
+            <Link to='/cart' >
+                <ShoppingCartIcon style={{ color: 'white' }}/>
+            </Link>Cart
         </Button>
 
     );

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
-import { getBookById, deleteBookById, updateBookById } from "../services/bookService";
-import { useParams, useNavigate } from "react-router-dom";
+import { getBookById, deleteBookById, updateBookById } from "../../services/bookService";
+import { useParams, useNavigate, Navigate } from "react-router-dom";
 import {
     Container,
     Typography,
@@ -9,9 +9,10 @@ import {
  import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
-import BookFormDialog from "../components/BookFormDialog";
-import { CartContext } from "../context/CartContext";
-import CartNavButton from "../components/CartNavButton";
+import BookFormDialog from "../../components/BookFormDialog";
+import { CartContext } from "../../context/CartContext";
+import CartNavButton from "../../components/CartNavButton";
+import { AuthContext } from "../../context/AuthContext";
 
 
 const BookDetailsPage = () => {
@@ -20,6 +21,7 @@ const BookDetailsPage = () => {
     const [dialogOpen, setDialogOpen] = useState(false);
     const navigate = useNavigate();
     const { cart, addToCart } = useContext(CartContext);
+    const { user, admin } = useContext(AuthContext);
 
     const fetchBookById = async (id) => {
         try {
@@ -27,6 +29,10 @@ const BookDetailsPage = () => {
             setBook(response.data);
         } catch (error) {
             console.error('Failed to fetch book by id:', error);
+            if(!user) {
+                <Navigate to="/login" replace/>
+                navigate('/login');
+            }
         }
     };
 
@@ -48,6 +54,7 @@ const BookDetailsPage = () => {
 
     const handleDialogClose = () => {
         setDialogOpen(false);
+        console.log('close');
     }
 
     const handleDeleteBook = async () => {
@@ -97,10 +104,10 @@ const BookDetailsPage = () => {
                         <Stack direction="row" spacing={2} justifyContent={"right"}>
                             <Button size='small' color='primary' variant='contained' onClick={() => addToCart(book._id, book.title)}>
                                 Add to cart</Button>
-                            <Button size='small' variant='outlined' onClick={handleEditBook}>
-                                Edit</Button>
-                            <Button size='small' color='error' variant='contained' onClick={handleDeleteBook}>
-                                Delete</Button>
+                            {admin &&<Button size='small' variant='outlined' onClick={handleEditBook}>
+                                Edit</Button>}
+                            {admin &&<Button size='small' color='error' variant='contained' onClick={handleDeleteBook}>
+                                Delete</Button>}
                         </Stack>
                         </Grid>
                     </Grid>

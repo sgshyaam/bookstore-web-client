@@ -30,6 +30,12 @@ const BookFormDialog = ({ open, onClose, onSave, book }) => {
 
     const handleSave = () => {
         onSave({ title, author, description, price });
+        if(!open) {
+            setTitle("");
+            setAuthor("");
+            setDescription("");
+            setPrice("");
+        }
     }
 
     return(
@@ -72,7 +78,12 @@ const BookFormDialog = ({ open, onClose, onSave, book }) => {
                 />
             </DialogContent>
             <DialogActions>
-                <Button onClick={onClose} color='error'>
+                <Button onClick={() => {
+                    setTitle("");
+                    setAuthor("");
+                    setDescription("");
+                    setPrice("");
+                    return onClose();}} color='error'>
                 Cancel
                 </Button>
                 <Button onClick={handleSave} color='primary'>
