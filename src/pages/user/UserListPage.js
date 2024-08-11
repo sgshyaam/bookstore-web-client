@@ -11,7 +11,6 @@ const UserListPage = () => {
     const fetchAllUsers = async() => {
         try{
             const response = await getAllUsers();
-            console.log(response.data);
             setUsers(response.data);
         } catch (error) {
             console.error(error);

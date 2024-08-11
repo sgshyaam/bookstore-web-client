@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useCallback } from "react";
 import { getBookById, deleteBookById, updateBookById } from "../../services/bookService";
 import { useParams, useNavigate, Navigate } from "react-router-dom";
 import {
@@ -23,7 +23,7 @@ const BookDetailsPage = () => {
     const { cart, addToCart } = useContext(CartContext);
     const { user, admin } = useContext(AuthContext);
 
-    const fetchBookById = async (id) => {
+    const fetchBookById = useCallback(async (id) => {
         try {
             const response = await getBookById(id);
             setBook(response.data);
@@ -34,7 +34,7 @@ const BookDetailsPage = () => {
                 navigate('/login');
             }
         }
-    };
+    }, [navigate, user]);
 
     const handleEditBook = () => {
         setDialogOpen(true);
@@ -71,7 +71,7 @@ const BookDetailsPage = () => {
 
     useEffect(() => {
         fetchBookById(id);
-    }, [id]);
+    }, [fetchBookById, id]);
 
 
     return(

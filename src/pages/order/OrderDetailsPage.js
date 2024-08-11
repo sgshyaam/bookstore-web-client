@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Container, Typography, Grid, Card, CardContent, Button } from '@mui/material';
+import { Container, Typography, Grid, Button } from '@mui/material';
 import { getOrderById, updateOrderById } from '../../services/orderService';
 import { Box } from '@mui/material';
 import CartItemCard from '../../components/CartItemCard';
@@ -25,7 +25,6 @@ const OrderDetailsPage = () => {
     };
 
     useEffect(() => {
-        console.log(orderId);
         fetchOrderById(orderId)
     }, [orderId]);
 
@@ -38,7 +37,6 @@ const OrderDetailsPage = () => {
     }
 
     const handleRemoveOrderItem = (bookId) => {
-        console.log('Order details page remove', bookId);
         setBooks((prev) => prev.filter((item) => item.book_id !== bookId));
         setIsEditedFlag(true);
     }
@@ -65,8 +63,16 @@ const OrderDetailsPage = () => {
     }
 
     const handleBooksUpdate = async () => {
-        console.log('Order details page update');
-        
+        const update = order;
+        update.books = books;
+        try {
+            await updateOrderById(orderId, update);
+            alert('order updated successfully');
+            setIsEditedFlag(false);
+            fetchOrderById(orderId);
+        } catch(error) {
+            console.error(error)
+        }
     }
 
 

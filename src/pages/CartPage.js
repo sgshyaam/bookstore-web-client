@@ -5,13 +5,11 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import { Typography, Container, Button } from "@mui/material";
 import CartItemCard from '../components/CartItemCard'
-import { AuthContext } from "../context/AuthContext";
 import { createOrder } from "../services/orderService";
 
 const CartPage = () => {
     const navigate = useNavigate();
     const { cart, removeFromCart, clearCart, updateQuantity } = useContext(CartContext);
-    const { user } = useContext(AuthContext);
     const checkoutStyle = {
         position: 'fixed',
         bottom: '20px',
@@ -24,7 +22,6 @@ const CartPage = () => {
     }
 
     const handleCartItemUpdate = (bookId, quantity) => {
-        console.log('Cart page update');
         if(bookId !== null) {
             updateQuantity(bookId, quantity);
         }
@@ -40,7 +37,7 @@ const CartPage = () => {
         };
         try {
             const response = await createOrder(order);
-            console.log(response.data);
+            alert(`Order created successfully !`, response.data);
             clearCart();
         } catch(error) {
             console.error(error)
