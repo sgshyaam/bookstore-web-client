@@ -3,13 +3,14 @@ import { useNavigate } from "react-router-dom";
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import { Typography, Container } from "@mui/material";
-import MenuListComposition from '../components/MenuListComposition';
-import AddButton from "../components/AddButton";
-import BookCard from "../components/BookCard";
-import { getAllBooks, updateBookById, deleteBookById, createBook } from "../services/bookService";
-import BookFormDialog from "../components/BookFormDialog";
-import CartNavButton from "../components/CartNavButton";
-import { CartContext } from "../context/CartContext";
+import MenuListComposition from '../../components/MenuListComposition';
+import AddButton from "../../components/AddButton";
+import BookCard from "../../components/BookCard";
+import { getAllBooks, updateBookById, deleteBookById, createBook } from "../../services/bookService";
+import BookFormDialog from "../../components/BookFormDialog";
+import CartNavButton from "../../components/CartNavButton";
+import { CartContext } from "../../context/CartContext";
+import { AuthContext } from "../../context/AuthContext";
 
 const BookListPage = () => {
     const navigate = useNavigate();
@@ -17,6 +18,7 @@ const BookListPage = () => {
     const [selectedBook, setSelectedBook] = useState(null);
     const [dialogOpen, setDialogOpen] = useState(false);
     const { cart, addToCart } = useContext(CartContext);
+    const { admin } = useContext(AuthContext);
 
     const fetchBooks = async () => {
         try {
@@ -60,7 +62,7 @@ const BookListPage = () => {
     const handleDeleteBook = async (bookId) => {
         try {
             const response = await deleteBookById(bookId);
-            console.log(response.message);
+            alert(response.message);
         } catch (error) {
             alert(error.response.data.message);
             console.error('Failed to delete book:', error);
@@ -89,7 +91,7 @@ const BookListPage = () => {
             <Typography variant="h6" align="justify">Book List</Typography>
             </Grid>
             <Grid item xs={2} margin={0}>
-            <AddButton onAdd={handleAddBook} buttonName={'Add Book'}/>
+            {admin && <AddButton onAdd={handleAddBook} buttonName={'Add Book'}/>}
             </Grid>
         </Grid>
         <Grid container spacing={2} mt={2}>

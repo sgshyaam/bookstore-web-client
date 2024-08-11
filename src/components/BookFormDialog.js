@@ -39,7 +39,6 @@ const BookFormDialog = ({ open, onClose, onSave, book }) => {
                 <TextField
                   label = 'Title'
                   fullWidth
-                  variant='outlined'
                   margin='normal'
                   value={title}
                   onChange={(e) => {setTitle(e.target.value)}}
@@ -47,7 +46,6 @@ const BookFormDialog = ({ open, onClose, onSave, book }) => {
                 <TextField
                   label = 'Author'
                   fullWidth
-                  variant='outlined'
                   margin='normal'
                   value={author}
                   onChange={(e) => {setAuthor(e.target.value)}}
@@ -55,7 +53,6 @@ const BookFormDialog = ({ open, onClose, onSave, book }) => {
                 <TextField
                   label = 'Price'
                   fullWidth
-                  variant='outlined'
                   margin='normal'
                   value={price}
                   onChange={(e) => {setPrice(e.target.value)}}
@@ -63,7 +60,6 @@ const BookFormDialog = ({ open, onClose, onSave, book }) => {
                 <TextField
                   label = 'Description'
                   fullWidth
-                  variant='outlined'
                   margin='normal'
                   multiline
                   rows={5}
@@ -72,7 +68,19 @@ const BookFormDialog = ({ open, onClose, onSave, book }) => {
                 />
             </DialogContent>
             <DialogActions>
-                <Button onClick={onClose} color='error'>
+                <Button onClick={() => {
+                    if(book) {
+                        setTitle(book.title);
+                        setAuthor(book.author);
+                        setDescription(book.description);
+                        setPrice(book.price);
+                    } else {
+                        setTitle("");
+                        setAuthor("");
+                        setDescription("");
+                        setPrice("");
+                    }
+                    return onClose();}} color='error'>
                 Cancel
                 </Button>
                 <Button onClick={handleSave} color='primary'>
