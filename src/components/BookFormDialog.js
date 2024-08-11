@@ -30,6 +30,12 @@ const BookFormDialog = ({ open, onClose, onSave, book }) => {
 
     const handleSave = () => {
         onSave({ title, author, description, price });
+        if(!open) {
+            setTitle("");
+            setAuthor("");
+            setDescription("");
+            setPrice("");
+        }
     }
 
     return(

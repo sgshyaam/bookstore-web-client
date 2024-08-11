@@ -10,7 +10,6 @@ import { getAllBooks, updateBookById, deleteBookById, createBook } from "../../s
 import BookFormDialog from "../../components/BookFormDialog";
 import CartNavButton from "../../components/CartNavButton";
 import { CartContext } from "../../context/CartContext";
-import { AuthContext } from "../../context/AuthContext";
 
 const BookListPage = () => {
     const navigate = useNavigate();
@@ -18,7 +17,6 @@ const BookListPage = () => {
     const [selectedBook, setSelectedBook] = useState(null);
     const [dialogOpen, setDialogOpen] = useState(false);
     const { cart, addToCart } = useContext(CartContext);
-    const { admin } = useContext(AuthContext);
 
     const fetchBooks = async () => {
         try {
@@ -62,7 +60,7 @@ const BookListPage = () => {
     const handleDeleteBook = async (bookId) => {
         try {
             const response = await deleteBookById(bookId);
-            alert(response.message);
+            console.log(response.message);
         } catch (error) {
             alert(error.response.data.message);
             console.error('Failed to delete book:', error);
@@ -91,7 +89,7 @@ const BookListPage = () => {
             <Typography variant="h6" align="justify">Book List</Typography>
             </Grid>
             <Grid item xs={2} margin={0}>
-            {admin && <AddButton onAdd={handleAddBook} buttonName={'Add Book'}/>}
+            <AddButton onAdd={handleAddBook} buttonName={'Add Book'}/>
             </Grid>
         </Grid>
         <Grid container spacing={2} mt={2}>

@@ -17,7 +17,6 @@ const CartNavButton = () => {
       const { cart } = useContext(CartContext);
 
     return(
-        
         <Tooltip title="Proceed To Cart" placement="top-end">
             <Button variant="contained" color="primary" style={linkStyle} onClick={()=> navigate('/cart')}>
                     <ShoppingCartIcon style={{ color: 'white' }}/> ({cart.length})

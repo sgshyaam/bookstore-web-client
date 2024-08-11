@@ -17,8 +17,8 @@ const CartPage = () => {
         zIndex: 1000
       };
 
-    const handleAddCartItem = () => {
-
+    const handleRemoveCartItem = (bookId) => {
+        removeFromCart(bookId);
     }
 
     const handleCartItemUpdate = (bookId, quantity) => {
@@ -53,23 +53,26 @@ const CartPage = () => {
             <Grid item xs={1} margin={0}>
                 <Button onClick={handleNavigateBackFromCart}>Back</Button>
             </Grid>
-            <Grid item xs={11} >
+            <Grid item xs={9} >
             <Typography variant="h6" align="justify">Cart Page</Typography>
+            </Grid>
+            <Grid item xs={2} margin={0}>
+                <Button variant='contained' color='error' onClick={()=> clearCart()}>Clear All</Button>
             </Grid>
         </Grid>
         <Grid container spacing={2} mt={2} >
             {cart.map((book) => {
-                return(<Grid item xs={12} sm={6} md={12} key={book._id}>
+                return(<Grid item xs={12} sm={6} md={12} key={book.book_id}>
                     <CartItemCard
                         book={book}
-                        onAdd={handleAddCartItem}
                         onRemove={handleRemoveCartItem}
-                        onClear={() => clearCart()}
+                        onUpdate={handleCartItemUpdate}
                     />
                 </Grid>);
             })}
         </Grid>
     </Box>
+    {cart.length!==0 && <Button variant="contained" color="primary" style={checkoutStyle} onClick={handleCheckout}>Checkout</Button>}
     </Container>
         
     );

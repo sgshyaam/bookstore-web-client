@@ -13,7 +13,7 @@ import { AuthContext } from '../context/AuthContext';
 export default function MenuListComposition() {
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
-  const { logoutUser } = React.useContext(AuthContext);
+  const { admin, logoutUser } = React.useContext(AuthContext);
 
   const linkStyle = {
     textDecoration: 'none',
@@ -105,8 +105,11 @@ export default function MenuListComposition() {
                     <Link to='/books' style={linkStyle}>
                     <MenuItem onClick={handleClose}>List</MenuItem></Link>
 
-                    <Link to='/orders'style={linkStyle}>
-                    <MenuItem onClick={handleClose}>Orders</MenuItem></Link>
+                    {admin && <Link to='/orders'style={linkStyle}>
+                    <MenuItem onClick={handleClose}>Orders</MenuItem></Link>}
+
+                    {admin &&<Link to='/users'style={linkStyle}>
+                    <MenuItem onClick={handleClose}>Users</MenuItem></Link>}
 
                     <Link to='/cart'style={linkStyle}>
                     <MenuItem onClick={handleClose}>Cart</MenuItem></Link>
