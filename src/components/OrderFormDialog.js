@@ -20,7 +20,6 @@ const OrderFormDialog = ({ open, onClose, onSave, order }) => {
     const [selectedDate, setSelectedDate] = useState(new Date());
     
     const handleDateChange = (date) => {
-        // Ensure date is a valid Date object
         if (date instanceof Date && !isNaN(date.getTime())) {
             setSelectedDate(date);
         }
@@ -36,13 +35,12 @@ const OrderFormDialog = ({ open, onClose, onSave, order }) => {
     useEffect(() => {
         if (order) {
             setUser(order.username || "");
-            // Convert orderDate to a Date object if it's not already
             setSelectedDate(order.orderDate instanceof Date ? order.orderDate : new Date(order.orderDate));
             setStatus(order.status || "");
             setTotalAmount(order.totalAmount || "");
         } else {
             setUser("");
-            setSelectedDate(new Date()); // Reset to current date
+            setSelectedDate(new Date());
             setStatus("");
             setTotalAmount("");
         }
@@ -52,12 +50,12 @@ const OrderFormDialog = ({ open, onClose, onSave, order }) => {
         const updateOrder = {
             ...order,
             status: status,
-            orderDate: selectedDate.toISOString(), // Date object should be fine here
+            orderDate: selectedDate.toISOString(),
         };
         onSave(updateOrder);
         if (!open) {
             setUser("");
-            setSelectedDate(new Date()); // Reset to current date
+            setSelectedDate(new Date());
             setStatus("");
             setTotalAmount("");
         }
@@ -126,7 +124,6 @@ const OrderFormDialog = ({ open, onClose, onSave, order }) => {
             <DialogActions>
                 <Button
                     onClick={() => {
-                        // Revert to original order values
                         setUser(order.username || "");
                         setSelectedDate(order.orderDate instanceof Date ? order.orderDate : new Date(order.orderDate));
                         setStatus(order.status || "");
