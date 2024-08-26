@@ -25,7 +25,7 @@ const LoginForm = () => {
         <>
         <Container sx={{width:800, paddingTop:15}}>
             <Typography variant="h4">Login</Typography>
-            <form onSubmit={handleLogin}>
+            <form onSubmit={handleLogin} data-testid="login-form">
                 <TextField 
                     label="Username"
                     variant="filled"
